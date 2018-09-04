@@ -11,15 +11,15 @@ from selenium.common.exceptions import TimeoutException
 from selenium.common.exceptions import NoSuchElementException
 
 
-local = os.path.normcase(os.path.abspath('.')) #项目相对路径
-host = "23.110.211.170" #服务器host
-root = "root"   #账号
-password = "Gchao@888" #密码
-remotepath = '/www/wwwroot/www.alizhizhuchi.com/' #远程提交路径
-localpath = local + '/down/'    #本地上传路径
-yuming = local + '/yuming/yuming.txt' #域名库文件
+local = os.path.normcase(os.path.abspath('.'))  # 项目相对路径
+host = "23.110.211.170"  # 服务器host
+root = "root"   # 账号
+password = "Gchao@888"  # 密码
+remotepath = '/www/wwwroot/xbw/'  # 远程提交路径
+localpath = local + '/down/'    # 本地上传路径
+yuming = local + '/yuming/yuming.txt'  # 域名库文件
 sysstr = platform.system()
-if sysstr =="Windows":
+if sysstr == "Windows":
     path = local + "/driver/chromedriver.exe"  # 谷歌控制器路径
     profile = 'C:/Users/username/AppData/Local/Google/Chrome/User Data/test_profile'
 
@@ -62,7 +62,6 @@ for url in file:
     print('添加url:' + url)
     sendurl = driver.find_element_by_class_name('add-site-input')
     sendurl.send_keys('www.' + url)
-
     while 1:
         try:
             put = driver.find_element_by_id('captcha')
@@ -71,15 +70,17 @@ for url in file:
             vf = input('输入验证码：')
             put.send_keys(vf)
             driver.find_element_by_id('site-add').click()
+
+        except Exception as e:
             print('选择领域')
             if WebDriverWait(driver, 1).until(EC.visibility_of(driver.find_element_by_xpath('//ul/li[18]/label'))):
                 driver.find_element_by_xpath('//ul/li[18]/label').click()
                 driver.find_element_by_xpath('//ul/li[10]/label').click()
                 driver.find_element_by_xpath('//ul/li[25]/label').click()
                 print('设置成功')
+                time.sleep(100)
                 driver.find_element_by_id('sub-attr').click()
                 break
-        except Exception as e:
             try:
                 nx = driver.find_element_by_id('sub-attr')
             except Exception:
